@@ -1,0 +1,35 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+-- Books the user marked with ♥. Stores the full Book so the Favorites
+-- screen works offline without calling the API again.
+CREATE TABLE favoriteBook (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    image_url TEXT NOT NULL,
+    authors TEXT AS List<String> NOT NULL,
+    description TEXT,
+    languages TEXT AS List<String> NOT NULL,
+    first_publish_year TEXT,
+    average_rating REAL,
+    rating_count INTEGER,
+    num_pages INTEGER,
+    num_editions INTEGER NOT NULL,
+    added_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+selectAll:
+SELECT *
+FROM favoriteBook
+ORDER BY added_at DESC, rowid DESC;
+
+insert:
+INSERT OR REPLACE INTO favoriteBook(
+    id, title, image_url, authors, description, languages,
+    first_publish_year, average_rating, rating_count, num_pages, num_editions
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteById:
+DELETE FROM favoriteBook
+WHERE id = ?;

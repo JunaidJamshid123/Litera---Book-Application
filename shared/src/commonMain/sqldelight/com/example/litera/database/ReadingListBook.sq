@@ -1,0 +1,24 @@
+import com.example.litera.readinglist.domain.model.ReadingStatus;
+
+-- Books on the user's reading list, with their current status.
+CREATE TABLE readingListBook (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    image_url TEXT,
+    status TEXT AS ReadingStatus NOT NULL,
+    updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+selectAll:
+SELECT *
+FROM readingListBook
+ORDER BY updated_at DESC, rowid DESC;
+
+-- Insert a new book, or replace the status of an existing one
+upsert:
+INSERT OR REPLACE INTO readingListBook(id, title, image_url, status)
+VALUES (?, ?, ?, ?);
+
+deleteById:
+DELETE FROM readingListBook
+WHERE id = ?;

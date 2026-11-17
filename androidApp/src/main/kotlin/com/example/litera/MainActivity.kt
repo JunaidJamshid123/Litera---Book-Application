@@ -1,5 +1,7 @@
 package com.example.litera
 
+import com.example.litera.app.App
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
